@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 // chief.sol - select an authority by consensus
 
 // Copyright (C) 2017  DappHub, LLC
@@ -15,7 +17,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity >=0.4.23;
+pragma solidity >=0.6.12;
 
 import 'ds-token/token.sol';
 import 'ds-roles/roles.sol';
@@ -148,30 +150,28 @@ contract DSChiefApprovals is DSThing {
 contract DSChief is DSRoles, DSChiefApprovals {
 
     constructor(DSToken GOV, DSToken IOU, uint MAX_YAYS)
-             DSChiefApprovals (GOV, IOU, MAX_YAYS)
+        DSChiefApprovals (GOV, IOU, MAX_YAYS)
         public
     {
         authority = this;
         owner = address(0);
     }
 
-    function setOwner(address owner_) public {
+    function setOwner(address owner_) override public {
         owner_;
         revert();
     }
 
-    function setAuthority(DSAuthority authority_) public {
+    function setAuthority(DSAuthority authority_) override public {
         authority_;
         revert();
     }
 
-    function isUserRoot(address who)
-        public view
-        returns (bool)
-    {
+    function isUserRoot(address who) public override view returns (bool) {
         return (who == hat);
     }
-    function setRootUser(address who, bool enabled) public {
+
+    function setRootUser(address who, bool enabled) public override {
         who; enabled;
         revert();
     }
